@@ -99,9 +99,19 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "main": ["src/test.ts"],
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.spec.json",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "inlineStyleLanguage": ["scss"],
+            "assets": ["src/assets", "node_modules/ionicons/dist/ionicons/svg"],
+            "styles": ["src/theme/variables.scss", "src/global.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "ci": {
+              "progress": false,
+              "watch": false
+            },
             "scripts": []
           }
         },
