@@ -1,0 +1,52 @@
+<ion-content [fullscreen]="true" color="primary" scroll="false">
+  <div class="flex-center">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Registration</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-input
+          id="input-name"
+          label="Name"
+          labelPlacement="floating"
+          ngModel
+          name
+        ></ion-input>
+        <ion-input
+          id="input-email"
+          type="email"
+          label="E-mail"
+          labelPlacement="floating"
+          errorText="Invalid email"
+          ngModel
+          email
+        ></ion-input>
+        <ion-input
+          id="input-password"
+          type="password"
+          label="Password"
+          labelPlacement="floating"
+          errorText="Invalid password"
+          ngModel
+          password
+        ></ion-input>
+        <ion-input
+          id="input-confirm"
+          type="password"
+          label="Confirm password"
+          labelPlacement="floating"
+          errorText="Invalid password"
+          ngModel
+          confirmPassword
+        ></ion-input>
+        <ion-button id="btn-login" color="primary" size="block"
+          >Send registration</ion-button
+        >
+        <ion-button id="btn-register" color="primary" fill="clear" size="full"
+          >Login</ion-button
+        >
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
