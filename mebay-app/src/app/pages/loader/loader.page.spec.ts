@@ -17,6 +17,6 @@ describe('LoaderPage', () => {
 
   it('should display spinner', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('ion-spinner')).toBeTruthy;
+    expect(compiled.querySelector('ion-spinner')).toBeTruthy();
   });
 });
