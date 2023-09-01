@@ -21,11 +21,11 @@ describe('HomePage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display First try', () => {
+  it('should display meBay', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(
       compiled.querySelector('ion-toolbar ion-title')?.textContent
-    ).toContain('First try');
+    ).toContain('meBay');
   });
 
   it('should not display Second try', () => {
