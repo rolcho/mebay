@@ -10,40 +10,50 @@
           id="input-name"
           label="Name"
           labelPlacement="floating"
+          errorText="You must add your name"
           ngModel
           name
+          required
         ></ion-input>
         <ion-input
           id="input-email"
           type="email"
           label="E-mail"
           labelPlacement="floating"
-          errorText="Invalid email"
+          errorText="You must add a valid email"
           ngModel
           email
+          required
         ></ion-input>
         <ion-input
           id="input-password"
           type="password"
           label="Password"
           labelPlacement="floating"
-          errorText="Invalid password"
+          errorText="You must add a password"
           ngModel
           password
+          required
         ></ion-input>
         <ion-input
           id="input-confirm"
           type="password"
           label="Confirm password"
           labelPlacement="floating"
-          errorText="Invalid password"
+          errorText="Passwords must be the same"
           ngModel
           confirmPassword
+          required
         ></ion-input>
         <ion-button id="btn-login" color="primary" size="block"
           >Send registration</ion-button
         >
-        <ion-button id="btn-register" color="primary" fill="clear" size="full"
+        <ion-button
+          id="btn-register"
+          color="primary"
+          fill="clear"
+          size="full"
+          (click)="goToLogin()"
           >Login</ion-button
         >
       </ion-card-content>
