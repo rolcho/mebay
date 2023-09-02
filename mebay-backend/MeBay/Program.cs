@@ -1,4 +1,4 @@
-using Backend.Data;
+using MeBay.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

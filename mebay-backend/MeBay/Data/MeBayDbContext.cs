@@ -1,7 +1,7 @@
 using MeBay.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Data
+namespace MeBay.Data
 {
     public class MeBayDbContext : DbContext
     {
