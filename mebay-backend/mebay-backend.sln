@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeBay", "MeBay\MeBay.csproj", "{8DB8FA10-0554-4C15-9ACB-B0A2C401BB6B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeBay.Tests", "MeBay.Tests\MeBay.Tests.csproj", "{42EC6FC1-C0ED-4382-AC75-49CBB80B600C}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,5 +32,17 @@ Global
 		{8DB8FA10-0554-4C15-9ACB-B0A2C401BB6B}.Release|x64.Build.0 = Release|Any CPU
 		{8DB8FA10-0554-4C15-9ACB-B0A2C401BB6B}.Release|x86.ActiveCfg = Release|Any CPU
 		{8DB8FA10-0554-4C15-9ACB-B0A2C401BB6B}.Release|x86.Build.0 = Release|Any CPU
+		{42EC6FC1-C0ED-4382-AC75-49CBB80B600C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42EC6FC1-C0ED-4382-AC75-49CBB80B600C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42EC6FC1-C0ED-4382-AC75-49CBB80B600C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{42EC6FC1-C0ED-4382-AC75-49CBB80B600C}.Debug|x64.Build.0 = Debug|Any CPU
+		{42EC6FC1-C0ED-4382-AC75-49CBB80B600C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{42EC6FC1-C0ED-4382-AC75-49CBB80B600C}.Debug|x86.Build.0 = Debug|Any CPU
+		{42EC6FC1-C0ED-4382-AC75-49CBB80B600C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42EC6FC1-C0ED-4382-AC75-49CBB80B600C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42EC6FC1-C0ED-4382-AC75-49CBB80B600C}.Release|x64.ActiveCfg = Release|Any CPU
+		{42EC6FC1-C0ED-4382-AC75-49CBB80B600C}.Release|x64.Build.0 = Release|Any CPU
+		{42EC6FC1-C0ED-4382-AC75-49CBB80B600C}.Release|x86.ActiveCfg = Release|Any CPU
+		{42EC6FC1-C0ED-4382-AC75-49CBB80B600C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
