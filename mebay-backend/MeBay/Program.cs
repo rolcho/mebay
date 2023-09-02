@@ -10,6 +10,16 @@ builder.Services.AddDbContext<MeBayDbContext>(options =>
     options.UseNpgsql(connectionString);
 });
 
+builder.Services.AddCors(
+    options =>
+        options.AddDefaultPolicy(builder =>
+        {
+            builder.AllowAnyHeader();
+            builder.AllowAnyMethod();
+            builder.AllowAnyOrigin();
+        })
+);
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -27,6 +37,9 @@ builder.WebHost.UseUrls($"http://*:{port}");
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 
 UserEndpoints.MapUserEndpoints(app);
+
+app.UseCors();
+
 app.Run();
 
 public partial class Program { }
