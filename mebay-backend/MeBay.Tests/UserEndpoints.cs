@@ -1,3 +1,4 @@
+using MeBay.Test;
 using Microsoft.AspNetCore.Mvc.Testing;
 using NUnit.Framework;
 using System.Net;
@@ -7,12 +8,12 @@ namespace MyApp.Tests
 {
     public class UserEndpointsTests
     {
-        private WebApplicationFactory<Program> _factory;
+        private FactoryOverride _factory;
 
         [SetUp]
         public void Setup()
         {
-            _factory = new WebApplicationFactory<Program>();
+            _factory = new FactoryOverride();
         }
 
         [Test]
