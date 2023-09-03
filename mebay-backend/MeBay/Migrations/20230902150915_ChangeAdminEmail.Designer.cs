@@ -3,6 +3,7 @@ using System;
 using MeBay.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MeBay.Migrations
 {
     [DbContext(typeof(MeBayDbContext))]
-    partial class MeBayDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230902150915_ChangeAdminEmail")]
+    partial class ChangeAdminEmail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,6 +58,18 @@ namespace MeBay.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreationDate = new DateTime(2023, 9, 2, 15, 9, 15, 424, DateTimeKind.Utc).AddTicks(360),
+                            Email = "admin@mebay.com",
+                            ModificationDate = new DateTime(2023, 9, 2, 15, 9, 15, 424, DateTimeKind.Utc).AddTicks(360),
+                            Name = "admin",
+                            Password = "$2a$11$BCVExsrNkyEleihbFl4Tx.ADvWaxX3oCpFi8KKFaMQxOaDG/KmZ4W",
+                            Role = "Admin"
+                        });
                 });
 #pragma warning restore 612, 618
         }

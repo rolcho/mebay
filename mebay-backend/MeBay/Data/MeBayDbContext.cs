@@ -12,20 +12,7 @@ namespace MeBay.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder
-                .Entity<User>()
-                .HasData(
-                    new User()
-                    {
-                        Id = 1,
-                        Name = "admin",
-                        Email = "admin@fox.hu",
-                        Password = BCrypt.Net.BCrypt.HashPassword("Admin123"),
-                        Role = "Admin",
-                        CreationDate = DateTime.UtcNow,
-                        UpdateDate = DateTime.UtcNow
-                    }
-                );
+            modelBuilder.Entity<User>();
         }
     }
 }
