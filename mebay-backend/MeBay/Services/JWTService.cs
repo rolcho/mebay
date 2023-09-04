@@ -1,13 +1,13 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using MeBay.Models;
+using MeBay.Interfaces;
 
 namespace MeBay.Services;
 
-public class JWTService
+public class JWTService : IJWTService
 {
     private readonly IConfiguration _configuration;
 
