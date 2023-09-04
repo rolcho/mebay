@@ -8,5 +8,5 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine
 WORKDIR /app
 COPY --from=build-env /app/out .
-EXPOSE 80:5001
+EXPOSE 80
 ENTRYPOINT [ "dotnet" ,"MeBay.dll" ]

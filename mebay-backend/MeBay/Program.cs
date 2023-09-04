@@ -73,7 +73,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     );
 });
-var port = config["PORT"] ?? "5001";
+var port = config["PORT"];
 builder.WebHost.UseUrls($"http://*:{port}");
 
 var app = builder.Build();
