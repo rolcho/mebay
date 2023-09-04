@@ -5,11 +5,12 @@ using MeBay.Services;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using MeBay.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
-builder.Services.AddTransient<JWTService>();
+builder.Services.AddTransient<IJWTService, JWTService>();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<MeBayDbContext>(options =>
 {

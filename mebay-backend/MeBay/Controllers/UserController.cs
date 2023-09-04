@@ -6,6 +6,7 @@ using MeBay.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Mebay.Models;
+using MeBay.Interfaces;
 
 namespace MeBay.UserController
 {
@@ -15,9 +16,9 @@ namespace MeBay.UserController
     {
         private readonly IMapper _mapper;
         private readonly MeBayDbContext _dbContext;
-        private readonly JWTService _jwtService;
+        private readonly IJWTService _jwtService;
 
-        public UserController(IMapper mapper, MeBayDbContext dbContext, JWTService jwtService)
+        public UserController(IMapper mapper, MeBayDbContext dbContext, IJWTService jwtService)
         {
             _mapper = mapper;
             _dbContext = dbContext;
