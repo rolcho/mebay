@@ -1,4 +1,4 @@
-name: CD Backend
+name: CD - Backend
 
 on:
   push:
@@ -12,6 +12,7 @@ defaults:
 
 jobs:
   build:
+    name: Test and build Backend
     runs-on: ubuntu-latest
 
     steps:

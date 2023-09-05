@@ -1,4 +1,4 @@
-name: CD Frontend
+name: CD - Frontend
 
 on:
   push:
@@ -12,6 +12,7 @@ defaults:
 
 jobs:
   build:
+    name: Test and build Frontend
     runs-on: ubuntu-latest
 
     steps:
