@@ -80,15 +80,14 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    using (var scope = app.Services.CreateScope())
-    {
-        var dbContext = scope.ServiceProvider.GetRequiredService<MeBayDbContext>();
-        dbContext.Database.Migrate();
-    }
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<MeBayDbContext>();
+    dbContext.Database.Migrate();
+}
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
