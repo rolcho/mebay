@@ -1,0 +1,43 @@
+name: Backend Deploy
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+defaults:
+  run:
+    working-directory: mebay-backend
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+
+      - name: Publish
+        run: dotnet publish -c Development -o out
+
+      - name: Install Flyctl
+        run: |
+          curl -L https://get.fly.io/flyctl.sh | sh
+          echo "$HOME/.fly/bin" >> $GITHUB_PATH
+
+      - name: Deploy to Fly.io
+        run: flyctl deploy out --access-token ${{ secrets.BACKEND_API_TOKEN }}
