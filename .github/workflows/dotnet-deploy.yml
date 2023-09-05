@@ -12,32 +12,11 @@ defaults:
 
 jobs:
   deploy:
+    name: Deploy app
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 7.0.x
-
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Build
-        run: dotnet build --no-restore
-
-      - name: Test
-        run: dotnet test --no-build --verbosity normal
-
-      - name: Publish
-        run: dotnet publish -c Release -o out
-
-      - name: Install Flyctl
-        run: |
-          curl -L https://get.fly.io/flyctl.sh | sh
-          echo "$HOME/.fly/bin" >> $GITHUB_PATH
-
-      - name: Deploy to Fly.io
-        run: flyctl deploy out --access-token ${{ secrets.BACKEND_API_TOKEN }}
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.BACKEND_API_TOKEN }}
