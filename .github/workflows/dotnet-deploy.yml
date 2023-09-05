@@ -8,7 +8,7 @@ on:
 
 defaults:
   run:
-    working-directory: mebay-backend
+    working-directory: mebay-backend/MeBay
 
 jobs:
   deploy:
