@@ -1,4 +1,4 @@
-name: CD Backend
+name: CD Frontend
 
 on:
   push:
@@ -8,15 +8,15 @@ on:
 
 defaults:
   run:
-    working-directory: mebay-backend/MeBay
+    working-directory: mebay-app
 
 jobs:
   deploy:
-    name: Deploy Backend
+    name: Deploy Frontend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
-          FLY_API_TOKEN: ${{ secrets.BACKEND_API_TOKEN }}
+          FLY_API_TOKEN: ${{ secrets.FRONTEND_API_TOKEN }}
