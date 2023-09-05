@@ -11,7 +11,7 @@ namespace MeBay.UserController
         [HttpGet]
         public IActionResult HealthCheck()
         {
-            return Ok(new { Health = "OK" });
+            return Ok(new { health = "OK" });
         }
     }
 }
