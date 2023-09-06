@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
 builder.Services.AddTransient<IJWTService, JWTService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<MeBayDbContext>(options =>
 {
@@ -91,8 +92,6 @@ using (var scope = app.Services.CreateScope())
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
-
 app.Run();
 
 public partial class Program { }
