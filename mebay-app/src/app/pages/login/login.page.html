@@ -6,36 +6,30 @@
       </ion-card-header>
 
       <ion-card-content>
-        <ion-input
-          id="input-email"
-          type="email"
-          label="E-mail"
-          labelPlacement="floating"
-          errorText="Invalid email"
-          ngModel
-          email
-        ></ion-input>
-        <ion-input
-          id="input-password"
-          type="password"
-          label="Password"
-          labelPlacement="floating"
-          errorText="Invalid password"
-          ngModel
-          password
-        ></ion-input>
-        <ion-button id="btn-forgot" color="medium" fill="clear" size="full"
-          >Forgot password?</ion-button
-        >
-        <ion-button id="btn-login" color="primary" size="block"
-          >Login</ion-button
-        >
+        <form [formGroup]="loginFormGroup" (ngSubmit)="submitForm()">
+          <ion-input
+            *ngFor="let c of loginForm"
+            [type]="c.options.type"
+            [formControlName]="c.key"
+            [label]="c.options.label"
+            [errorText]="c.options.errorText"
+            labelPlacement="floating"
+          ></ion-input>
+
+          <ion-button
+            type="submit"
+            color="primary"
+            size="block"
+            [disabled]="!loginFormGroup.valid"
+            >Login</ion-button
+          >
+        </form>
         <ion-button
           id="btn-register"
           color="primary"
           fill="clear"
           size="full"
-          (click)="gotToRegistration()"
+          (click)="goToRegistration()"
           >Registration</ion-button
         >
       </ion-card-content>
