@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { IUserLoginRequest } from '../models/user-login-request.dto';
 import { IUserLoginResponse } from '../models/user-login-response.dto';
 import { IUserRegisterRequest } from '../models/user-register-request.dto.ts';
