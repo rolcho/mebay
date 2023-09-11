@@ -1,0 +1,22 @@
+[
+  {
+    "key": "email",
+    "type": "input",
+    "options": {
+      "label": "E-mail",
+      "required": true,
+      "type": "email",
+      "errorText": "Enter your login e-mail"
+    }
+  },
+  {
+    "key": "password",
+    "type": "input",
+    "options": {
+      "label": "Password",
+      "required": true,
+      "type": "password",
+      "errorText": "Enter your password"
+    }
+  }
+]

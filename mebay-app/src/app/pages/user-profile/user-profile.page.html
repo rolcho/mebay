@@ -1,0 +1,65 @@
+<ion-content [fullscreen]="true" color="primary" scroll="false">
+  <div class="flex-center">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>User profile</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-input
+          id="input-name"
+          label="Name"
+          labelPlacement="floating"
+          errorText="You must add your name"
+          ngModel
+          name
+          required
+        ></ion-input>
+        <ion-input
+          id="input-email"
+          type="email"
+          label="E-mail"
+          labelPlacement="floating"
+          errorText="You must add a valid email"
+          ngModel
+          email
+          required
+        ></ion-input>
+        <ion-input
+          id="input-password"
+          type="password"
+          label="Current password"
+          labelPlacement="floating"
+          errorText="You must enter your password"
+          ngModel
+          password
+          required
+        ></ion-input>
+        <ion-input
+          id="input-password"
+          type="password"
+          label="New password"
+          labelPlacement="floating"
+          errorText="You must add a password"
+          ngModel
+          password
+        ></ion-input>
+        <ion-input
+          id="input-confirm"
+          type="password"
+          label="Confirm new password"
+          labelPlacement="floating"
+          errorText="Passwords must be the same"
+          ngModel
+          confirmPassword
+        ></ion-input>
+        <ion-button id="btn-login" color="primary" size="block"
+          >Update profile</ion-button
+        >
+        <ion-button id="btn-register" color="danger" size="block"
+          >Remove account</ion-button
+        >
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
