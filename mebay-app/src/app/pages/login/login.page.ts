@@ -10,9 +10,9 @@ import {
 } from '@angular/forms';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { IUserLoginRequest } from 'src/app/models/user-login-request.dto';
-import { AuthService } from 'src/app/services/auth.service';
-import { IUserLoginResponse } from 'src/app/models/user-login-response.dto';
+import { IUserLoginRequest } from '../../models/user-login-request.dto';
+import { AuthService } from '../../services/auth.service';
+import { IUserLoginResponse } from '../../models/user-login-response.dto';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import LoginFormJson from '../../../assets/login_form.json';
 

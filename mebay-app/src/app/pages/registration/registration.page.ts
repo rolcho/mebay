@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from 'src/app/services/auth.service';
-import { IUserRegisterRequest } from 'src/app/models/user-register-request.dto.ts';
-import { IUserRegisterResponse } from 'src/app/models/user-register-response.dto.ts';
+import { AuthService } from '../../services/auth.service';
+import { IUserRegisterRequest } from '../../models/user-register-request.dto.ts';
+import { IUserRegisterResponse } from '../../models/user-register-response.dto.ts';
 
 @Component({
   selector: 'app-registration',
