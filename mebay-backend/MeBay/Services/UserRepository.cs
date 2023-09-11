@@ -74,7 +74,6 @@ namespace MeBay.Services
             var claims = authenticatedUser.Claims;
             var tokenData = _jwtService.DecodeToken(claims);
 
-            var list = _dbContext.Users.ToListAsync();
             var userById = await _dbContext.Users.FindAsync(id);
             if (userById == null)
             {

@@ -7,6 +7,7 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { JwtInterceptor } from './app/services/jwt-interceptor.service';
 
 if (environment.production) {
   enableProdMode();
@@ -15,7 +16,11 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    importProvidersFrom([HttpClientModule, IonicModule.forRoot({})]),
+    importProvidersFrom([
+      JwtInterceptor,
+      HttpClientModule,
+      IonicModule.forRoot({}),
+    ]),
     provideRouter(routes),
   ],
 });
