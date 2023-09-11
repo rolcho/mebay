@@ -8,13 +8,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AlertController, IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { IUserLoginRequest } from '../../models/user-login-request.dto';
 import { AuthService } from '../../services/auth.service';
 import { IUserLoginResponse } from '../../models/user-login-response.dto';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import LoginFormJson from '../../../assets/login_form.json';
+import { JwtDecoderService } from '../../services/jwt.service';
 
 export interface Options {
   label?: string;
@@ -46,7 +47,7 @@ export class LoginPage implements OnInit {
     private router: Router,
     private authService: AuthService,
     private fb: FormBuilder,
-    private alertCtrl: AlertController
+    private jwt: JwtDecoderService
   ) {
     this.loginFormGroup = this.fb.group({});
     this.createControls(this.loginForm);
@@ -76,7 +77,7 @@ export class LoginPage implements OnInit {
     if (this.loginFormGroup.valid) {
       this.authService.login(this.loginFormGroup.value).subscribe({
         next: (response: IUserLoginResponse) => {
-          console.log(response.token);
+          this.jwt.decode(response.token);
           this.router.navigateByUrl('/loader');
         },
         error: (response: HttpErrorResponse) => {
