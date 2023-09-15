@@ -16,6 +16,7 @@ import { IUserLoginResponse } from '../../models/user-login-response.dto';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import LoginFormJson from '../../../assets/login_form.json';
 import { JwtDecoderService } from '../../services/jwt.service';
+import { ToastService } from '../../services/toast.service';
 
 export interface Options {
   label?: string;
@@ -47,7 +48,8 @@ export class LoginPage implements OnInit {
     private router: Router,
     private authService: AuthService,
     private fb: FormBuilder,
-    private jwt: JwtDecoderService
+    private jwt: JwtDecoderService,
+    private toast: ToastService
   ) {
     this.loginFormGroup = this.fb.group({});
     this.createControls(this.loginForm);
@@ -78,7 +80,8 @@ export class LoginPage implements OnInit {
       this.authService.login(this.loginFormGroup.value).subscribe({
         next: (response: IUserLoginResponse) => {
           this.jwt.decode(response.token);
-          this.router.navigateByUrl('/loader');
+          this.toast.presentToast('You are logged in');
+          this.router.navigateByUrl('/user-profile');
         },
         error: (response: HttpErrorResponse) => {
           this.loginFormGroup.setErrors(Validators.required);

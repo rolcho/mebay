@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { IUserLoginRequest } from '../models/user-login-request.dto';
 import { IUserLoginResponse } from '../models/user-login-response.dto';
@@ -20,6 +20,20 @@ export class AuthService {
       `${this.BASE_URL}/register`,
       user
     );
+  }
+
+  update(
+    user: IUserRegisterRequest,
+    userId: number
+  ): Observable<IUserRegisterResponse> {
+    return this.http.put<IUserRegisterResponse>(
+      `${this.BASE_URL}/${userId}`,
+      user
+    );
+  }
+
+  profile(userId: number): Observable<IUserRegisterResponse> {
+    return this.http.get<IUserRegisterResponse>(`${this.BASE_URL}/${userId}`);
   }
 
   login(user: IUserLoginRequest): Observable<IUserLoginResponse> {
