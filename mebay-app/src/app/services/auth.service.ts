@@ -16,6 +16,7 @@ export class AuthService {
   constructor(private http: HttpClient, private storage: StorageService) {}
 
   register(user: IUserRegisterRequest): Observable<IUserRegisterResponse> {
+    console.log(`${this.BASE_URL}/register`);
     return this.http.post<IUserRegisterResponse>(
       `${this.BASE_URL}/register`,
       user
@@ -33,6 +34,7 @@ export class AuthService {
   }
 
   profile(userId: number): Observable<IUserRegisterResponse> {
+    console.log({ authServiceProfileId: userId });
     return this.http.get<IUserRegisterResponse>(`${this.BASE_URL}/${userId}`);
   }
 

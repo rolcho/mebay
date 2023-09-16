@@ -17,6 +17,7 @@ import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import LoginFormJson from '../../../assets/login_form.json';
 import { JwtDecoderService } from '../../services/jwt.service';
 import { ToastService } from '../../services/toast.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 export interface Options {
   label?: string;
@@ -49,7 +50,8 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private jwt: JwtDecoderService,
-    private toast: ToastService
+    private toast: ToastService,
+    private storage: StorageService
   ) {
     this.loginFormGroup = this.fb.group({});
     this.createControls(this.loginForm);
@@ -69,7 +71,9 @@ export class LoginPage implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.storage.clear();
+  }
 
   goToRegistration() {
     this.router.navigateByUrl('/registration');

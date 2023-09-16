@@ -15,6 +15,7 @@ export class StorageService {
 
   get<T>(key: string): T {
     const item = this.storage.getItem(key);
+    console.log({ tokenServiceKey: key, tokenServiceValue: item });
     return item ? JSON.parse(item) : null;
   }
 
