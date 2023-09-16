@@ -10,13 +10,9 @@ export class JwtDecoderService {
 
   decode(token: string) {
     const tokenContent = new JwtHelperService().decodeToken(token);
-    const isAdmin =
-      tokenContent[
-        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
-      ] === 'Admin';
-    this.storage.set('userId', tokenContent.userId);
+    this.storage.set('userId', parseInt(tokenContent.userId));
     this.storage.set('name', tokenContent.name);
-    this.storage.set('token', token);
-    this.storage.set('isAdmin', isAdmin);
+    this.storage.set('tokenKey', token);
+    this.storage.set('isAdmin', tokenContent.isAdmin);
   }
 }
