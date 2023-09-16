@@ -49,7 +49,6 @@ namespace MeBay.Controllers.UserController
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
             return await _userRepository.DeleteUser(id, HttpContext);
