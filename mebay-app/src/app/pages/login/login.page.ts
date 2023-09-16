@@ -17,7 +17,7 @@ import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import LoginFormJson from '../../../assets/login_form.json';
 import { JwtDecoderService } from '../../services/jwt.service';
 import { ToastService } from '../../services/toast.service';
-import { StorageService } from 'src/app/services/storage.service';
+import { StorageService } from '../../services/storage.service';
 
 export interface Options {
   label?: string;
