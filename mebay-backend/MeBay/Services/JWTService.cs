@@ -23,7 +23,8 @@ public class JWTService : IJWTService
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(ClaimTypes.Role, userrole),
             new Claim("userId", userId.ToString()),
-            new Claim("name", name)
+            new Claim("name", name),
+            new Claim("isAdmin", (userrole == "Admin").ToString())
         };
 
         var secretKey = _configuration["JwtSettings:Key"];
