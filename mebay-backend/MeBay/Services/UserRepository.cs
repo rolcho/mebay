@@ -135,10 +135,10 @@ namespace MeBay.Services
             {
                 return new NotFoundResult();
             }
-            if (id != tokenData.UserId && tokenData.Role != "Admin")
-            {
-                return new ForbidResult();
-            }
+            // if (id != tokenData.UserId && tokenData.Role != "Admin")
+            // {
+            //     return new ForbidResult();
+            // }
             _dbContext.Remove(userById);
             await _dbContext.SaveChangesAsync();
             return new NoContentResult();
