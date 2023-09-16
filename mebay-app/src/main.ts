@@ -8,7 +8,7 @@ import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './app/services/jwt-interceptor.service';
-
+import { StorageService } from './app/services/storage.service';
 if (environment.production) {
   enableProdMode();
 }
@@ -21,7 +21,11 @@ bootstrapApplication(AppComponent, {
       useClass: JwtInterceptor,
       multi: true,
     },
-    importProvidersFrom([HttpClientModule, IonicModule.forRoot({})]),
+    importProvidersFrom([
+      StorageService,
+      HttpClientModule,
+      IonicModule.forRoot({}),
+    ]),
     provideRouter(routes),
   ],
 });

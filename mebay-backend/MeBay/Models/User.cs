@@ -18,8 +18,7 @@ namespace MeBay.Models
         [Required]
         public required string Email { get; set; }
 
-        [Required]
-        public required string Role { get; set; }
+        public string Role { get; set; } = "User";
 
         public DateTime CreationDate { get; set; }
 

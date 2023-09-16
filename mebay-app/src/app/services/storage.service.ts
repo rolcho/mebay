@@ -13,10 +13,13 @@ export class StorageService {
     this.storage.setItem(key, value);
   }
 
-  get<T>(key: string): T {
+  get<T>(key: string): T | null {
     const item = this.storage.getItem(key);
-    console.log({ tokenServiceKey: key, tokenServiceValue: item });
-    return item ? JSON.parse(item) : null;
+    try {
+      if (item === null) return null;
+      return JSON.parse(item);
+    } catch {}
+    return item as T;
   }
 
   remove(key: string): void {

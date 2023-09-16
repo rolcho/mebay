@@ -16,7 +16,6 @@ export class AuthService {
   constructor(private http: HttpClient, private storage: StorageService) {}
 
   register(user: IUserRegisterRequest): Observable<IUserRegisterResponse> {
-    console.log(`${this.BASE_URL}/register`);
     return this.http.post<IUserRegisterResponse>(
       `${this.BASE_URL}/register`,
       user
@@ -34,7 +33,6 @@ export class AuthService {
   }
 
   profile(userId: number): Observable<IUserRegisterResponse> {
-    console.log({ authServiceProfileId: userId });
     return this.http.get<IUserRegisterResponse>(`${this.BASE_URL}/${userId}`);
   }
 
@@ -47,7 +45,11 @@ export class AuthService {
   }
 
   get name(): string {
-    return this.storage.get('name');
+    return this.storage.get('name')!;
+  }
+
+  get userId(): string {
+    return this.storage.get('userId')!;
   }
 
   get isAuthenticate(): boolean {
@@ -56,5 +58,9 @@ export class AuthService {
 
   get isAdmin(): boolean {
     return this.storage.get('isAdmin') === true;
+  }
+
+  get token(): string {
+    return this.storage.get('tokenKey')!;
   }
 }

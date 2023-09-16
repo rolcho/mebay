@@ -16,7 +16,7 @@
       "label": "E-mail",
       "required": true,
       "type": "email",
-      "errorText": "Enter a valid e-mail"
+      "errorText": "Enter a valid non existing e-mail"
     }
   },
   {
@@ -33,8 +33,8 @@
     "key": "password",
     "type": "input",
     "options": {
-      "label": "Password",
-      "required": true,
+      "label": "New password",
+      "required": false,
       "type": "password",
       "errorText": "Enter your new password"
     }
@@ -44,7 +44,7 @@
     "type": "input",
     "options": {
       "label": "Confirm password",
-      "required": true,
+      "required": false,
       "type": "password",
       "errorText": "The passwords must be the same"
     }

@@ -6,7 +6,7 @@
       </ion-card-header>
 
       <ion-card-content>
-        <form [formGroup]="userProfileFormGroup" (ngSubmit)="submitForm()">
+        <form [formGroup]="userProfileFormGroup">
           <ion-input
             *ngFor="let c of userProfileForm"
             [type]="c.options.type"
@@ -15,10 +15,14 @@
             [errorText]="c.options.errorText"
             labelPlacement="floating"
           ></ion-input>
+          <ion-button
+            id="btn-login"
+            color="primary"
+            size="block"
+            (click)="submitForm()"
+            >Update profile</ion-button
+          >
         </form>
-        <ion-button id="btn-login" color="primary" size="block"
-          >Update profile</ion-button
-        >
         <ion-button id="btn-register" color="danger" size="block"
           >Remove account</ion-button
         >
