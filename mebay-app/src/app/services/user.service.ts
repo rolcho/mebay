@@ -11,7 +11,7 @@ import { StorageService } from './storage.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class UserService {
   BASE_URL = `${environment.SERVER_URL}/user`;
   constructor(private http: HttpClient, private storage: StorageService) {}
 
@@ -34,6 +34,12 @@ export class AuthService {
 
   profile(userId: number): Observable<IUserRegisterResponse> {
     return this.http.get<IUserRegisterResponse>(`${this.BASE_URL}/${userId}`);
+  }
+
+  delete(userId: number): Observable<IUserRegisterResponse> {
+    return this.http.delete<IUserRegisterResponse>(
+      `${this.BASE_URL}/${userId}`
+    );
   }
 
   login(user: IUserLoginRequest): Observable<IUserLoginResponse> {
