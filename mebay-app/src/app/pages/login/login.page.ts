@@ -11,7 +11,7 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { IUserLoginRequest } from '../../models/user-login-request.dto';
-import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 import { IUserLoginResponse } from '../../models/user-login-response.dto';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import LoginFormJson from '../../../assets/login_form.json';
@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService,
+    private userService: UserService,
     private fb: FormBuilder,
     private jwt: JwtDecoderService,
     private toast: ToastService,
@@ -81,10 +81,11 @@ export class LoginPage implements OnInit {
 
   submitForm() {
     if (this.loginFormGroup.valid) {
-      this.authService.login(this.loginFormGroup.value).subscribe({
+      this.userService.login(this.loginFormGroup.value).subscribe({
         next: (response: IUserLoginResponse) => {
           this.jwt.decode(response.token);
           this.toast.presentToast('You are logged in');
+          this.loginFormGroup.reset();
           this.router.navigateByUrl('/user-profile');
         },
         error: (response: HttpErrorResponse) => {

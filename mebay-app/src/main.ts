@@ -9,6 +9,7 @@ import { environment } from './environments/environment';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './app/services/jwt-interceptor.service';
 import { StorageService } from './app/services/storage.service';
+import { LoaderService } from './app/services/loader.service';
 if (environment.production) {
   enableProdMode();
 }
@@ -19,6 +20,11 @@ bootstrapApplication(AppComponent, {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderService,
       multi: true,
     },
     importProvidersFrom([

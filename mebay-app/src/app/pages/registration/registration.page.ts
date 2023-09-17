@@ -11,7 +11,7 @@ import {
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 import { IUserRegisterRequest } from '../../models/user-register-request.dto.ts';
 import { IUserRegisterResponse } from '../../models/user-register-response.dto.ts';
 import RegistrationFormJson from '../../../assets/registration_form.json';
@@ -44,7 +44,7 @@ export class RegistrationPage implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService,
+    private userService: UserService,
     private fb: FormBuilder
   ) {
     this.registrationFormGroup = this.fb.group({});
@@ -80,8 +80,9 @@ export class RegistrationPage implements OnInit {
         Validators.required
       );
     if (this.registrationFormGroup.valid) {
-      this.authService.register(this.registrationFormGroup.value).subscribe({
+      this.userService.register(this.registrationFormGroup.value).subscribe({
         next: (response: IUserRegisterResponse) => {
+          this.registrationFormGroup.reset();
           this.router.navigateByUrl('/login');
         },
         error: (response: HttpErrorResponse) => {

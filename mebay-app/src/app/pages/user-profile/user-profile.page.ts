@@ -8,14 +8,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import {
   HttpClientModule,
   HttpErrorResponse,
   HttpStatusCode,
 } from '@angular/common/http';
-import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 import { IUserRegisterRequest } from '../../models/user-register-request.dto.ts';
 import { IUserRegisterResponse } from '../../models/user-register-response.dto.ts';
 import UserProfileFormJson from '../../../assets/user_profile_form.json';
@@ -49,7 +49,7 @@ export class UserProfilePage implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService,
+    private userService: UserService,
     private fb: FormBuilder,
     private toast: ToastService
   ) {
@@ -72,8 +72,8 @@ export class UserProfilePage implements OnInit {
   }
 
   ngOnInit() {
-    this.userId = parseInt(this.authService.userId);
-    this.authService.profile(this.userId).subscribe({
+    this.userId = parseInt(this.userService.userId);
+    this.userService.profile(this.userId).subscribe({
       next: (response: IUserRegisterResponse) => {
         this.userProfileFormGroup.get('name')?.setValue(response.name);
         this.userProfileFormGroup.get('email')?.setValue(response.email);
@@ -90,6 +90,36 @@ export class UserProfilePage implements OnInit {
     this.router.navigateByUrl('/login');
   }
 
+  deleteProfile() {
+    if (this.userProfileFormGroup.valid) {
+      console.log(this.userProfileFormGroup.controls['existingPassword'].value);
+
+      this.user.password =
+        this.userProfileFormGroup.controls['existingPassword'].value;
+      console.log(this.user);
+      this.userService.login(this.user).subscribe({
+        next: () => {
+          this.userService.delete(parseInt(this.userService.userId)).subscribe({
+            next: () => {
+              this.userService.logout();
+              this.router.navigate(['/']);
+            },
+            error: () => {
+              this.toast.presentToast('You must enter your password!');
+            },
+          });
+        },
+        error: () => {
+          this.userProfileFormGroup.controls[
+            'existingPassword'
+          ].markAsTouched();
+        },
+      });
+    } else {
+      this.toast.presentToast('You must enter your password!');
+    }
+  }
+
   submitForm() {
     if (
       this.userProfileFormGroup.controls['password'].value !==
@@ -98,53 +128,59 @@ export class UserProfilePage implements OnInit {
       this.userProfileFormGroup.controls['confirmPassword'].setErrors(
         Validators.required
       );
+
     if (this.userProfileFormGroup.valid) {
       this.user.password =
         this.userProfileFormGroup.controls['existingPassword'].value;
-      this.authService.login(this.user).subscribe({
-        next: () => {
-          if (this.userProfileFormGroup.controls['password'].value)
-            this.user.password =
-              this.userProfileFormGroup.controls['password'].value;
-          this.user.name = this.userProfileFormGroup.controls['name'].value;
-          this.user.email = this.userProfileFormGroup.controls['email'].value;
-          console.log(this.user);
-          this.authService
-            .update(this.user, parseInt(this.authService.userId))
-            .subscribe({
-              next: (response: IUserRegisterResponse) => {
-                this.toast.presentToast('Your profile has been updated.');
-                this.userProfileFormGroup.controls['existingPassword'].reset();
-                this.userProfileFormGroup.controls['password'].reset();
-                this.userProfileFormGroup.controls['confirmPassword'].reset();
-              },
-              error: (response: HttpErrorResponse) => {
-                this.userProfileFormGroup.setErrors(Validators.required);
-                if (response.status === HttpStatusCode.Conflict) {
-                  this.userProfileFormGroup.controls['email'].setErrors(
-                    Validators.required
-                  );
-                  return;
-                }
-                if (response.status === 409)
+      if (this.user.password === '') {
+        this.userProfileFormGroup.controls['existingPassword'].markAsTouched();
+      } else
+        this.userService.login(this.user).subscribe({
+          next: () => {
+            if (this.userProfileFormGroup.controls['password'].value)
+              this.user.password =
+                this.userProfileFormGroup.controls['password'].value;
+            this.user.name = this.userProfileFormGroup.controls['name'].value;
+            this.user.email = this.userProfileFormGroup.controls['email'].value;
+            console.log(this.user);
+            this.userService
+              .update(this.user, parseInt(this.userService.userId))
+              .subscribe({
+                next: (response: IUserRegisterResponse) => {
+                  this.toast.presentToast('Your profile has been updated.');
                   this.userProfileFormGroup.controls[
                     'existingPassword'
+                  ].reset();
+                  this.userProfileFormGroup.controls['password'].reset();
+                  this.userProfileFormGroup.controls['confirmPassword'].reset();
+                },
+                error: (response: HttpErrorResponse) => {
+                  this.userProfileFormGroup.setErrors(Validators.required);
+                  if (response.status === HttpStatusCode.Conflict) {
+                    this.userProfileFormGroup.controls['email'].setErrors(
+                      Validators.required
+                    );
+                    return;
+                  }
+                  if (response.status === 409)
+                    this.userProfileFormGroup.controls[
+                      'existingPassword'
+                    ].setErrors(Validators.required);
+                  this.userProfileFormGroup.controls[
+                    'confirmPassword'
                   ].setErrors(Validators.required);
-                this.userProfileFormGroup.controls['confirmPassword'].setErrors(
-                  Validators.required
-                );
-              },
-            });
-        },
-        error: (response) => {
-          if (response.status === HttpStatusCode.Unauthorized) {
-            this.userProfileFormGroup.controls['existingPassword'].setErrors(
-              Validators.required
-            );
-            return;
-          }
-        },
-      });
+                },
+              });
+          },
+          error: (response) => {
+            if (response.status === HttpStatusCode.Unauthorized) {
+              this.userProfileFormGroup.controls['existingPassword'].setErrors(
+                Validators.required
+              );
+              return;
+            }
+          },
+        });
     }
   }
 }
