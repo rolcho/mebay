@@ -28,7 +28,7 @@ namespace MeBay.Controllers.UserController
         }
 
         [HttpGet("list")]
-        [Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUsers()
         {
             return await _userRepository.GetAllUsers(HttpContext);
