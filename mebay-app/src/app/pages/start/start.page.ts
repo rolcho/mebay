@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { JwtDecoderService } from 'src/app/services/jwt.service';
+import { JwtDecoderService } from '../../services/jwt.service';
 import { Router } from '@angular/router';
 
 @Component({
