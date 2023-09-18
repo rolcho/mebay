@@ -11,6 +11,8 @@ import { IonicModule } from '@ionic/angular';
 import { JwtDecoderService } from '../../services/jwt.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ITopUp } from 'src/app/models/user-topup.dto';
 
 @Component({
   selector: 'app-home',
@@ -47,9 +49,19 @@ export class HomePage implements OnInit {
 
   topUpCredit() {
     if (this.amountForm.valid) {
-      this.topUp = !this.topUp;
       this.amount = this.amountForm.get('amount')!.value;
-      this.credits! += this.amount!;
+      this.user
+        .topUp({ credits: this.amount!, id: parseInt(this.user.userId) })
+        .subscribe({
+          next: (response: ITopUp) => {
+            this.topUp = !this.topUp;
+            this.credits = response.credits;
+            this.user.credits = response.credits;
+          },
+          error: (err: HttpErrorResponse) => {
+            console.log(err.status);
+          },
+        });
     }
   }
 }

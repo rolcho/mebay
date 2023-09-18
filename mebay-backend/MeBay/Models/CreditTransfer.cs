@@ -8,6 +8,6 @@ namespace MeBay.Models
         public required int Id { get; set; }
 
         [Required]
-        public required int Credit { get; set; }
+        public required int Credits { get; set; }
     }
 }

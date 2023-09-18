@@ -166,11 +166,11 @@ namespace MeBay.Services
             {
                 return new ForbidResult();
             }
-            if (userById.Credits + creditTransfer.Credit < 0)
+            if (userById.Credits + creditTransfer.Credits < 0)
             {
                 return new BadRequestResult();
             }
-            userById.Credits += creditTransfer.Credit;
+            userById.Credits += creditTransfer.Credits;
             await _dbContext.SaveChangesAsync();
             return new OkObjectResult(new { Credits = userById.Credits });
         }

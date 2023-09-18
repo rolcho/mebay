@@ -7,6 +7,7 @@ import { IUserRegisterRequest } from '../models/user-register-request.dto.ts';
 import { IUserRegisterResponse } from '../models/user-register-response.dto.ts';
 import { HttpClient } from '@angular/common/http';
 import { StorageService } from './storage.service';
+import { ITopUp } from '../models/user-topup.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,10 @@ export class UserService {
 
   profile(userId: number): Observable<IUserRegisterResponse> {
     return this.http.get<IUserRegisterResponse>(`${this.BASE_URL}/${userId}`);
+  }
+
+  topUp(topUp: ITopUp): Observable<ITopUp> {
+    return this.http.post<ITopUp>(`${this.BASE_URL}/credit`, topUp);
   }
 
   delete(userId: number): Observable<IUserRegisterResponse> {
@@ -72,5 +77,8 @@ export class UserService {
 
   get credits(): number {
     return this.storage.get('credits')!;
+  }
+  set credits(amount: number) {
+    this.storage.set('credits', amount)!;
   }
 }

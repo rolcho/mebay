@@ -1,6 +1,6 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" color="primary">
   <div class="top-center">
-    <ion-card color="primary">
+    <ion-card>
       <ion-card-header>
         <ion-card-title>{{userName}} </ion-card-title>
         <ion-card-subtitle>Credits: {{credits}}</ion-card-subtitle>
@@ -11,7 +11,7 @@
             <ion-input
               type="number"
               label="Amount: "
-              color="light"
+              color="primary"
               fill="solid"
               value="0"
               formControlName="amount"
@@ -22,7 +22,7 @@
             >Send money</ion-button
           >
         </div>
-        <ion-button color="light" size="block" (click)="topUp=!topUp"
+        <ion-button color="primary" size="block" (click)="topUp=!topUp"
           >{{topUp ? 'Cancel' : 'Top-up credits'}}</ion-button
         >
       </ion-card-content>
