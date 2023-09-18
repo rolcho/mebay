@@ -7,13 +7,8 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'start',
     pathMatch: 'full',
-  },
-  {
-    path: 'loader',
-    loadComponent: () =>
-      import('./pages/loader/loader.page').then((m) => m.LoaderPage),
   },
   {
     path: 'login',
@@ -33,5 +28,10 @@ export const routes: Routes = [
       import('./pages/user-profile/user-profile.page').then(
         (m) => m.UserProfilePage
       ),
+  },
+  {
+    path: 'start',
+    loadComponent: () =>
+      import('./pages/start/start.page').then((m) => m.StartPage),
   },
 ];

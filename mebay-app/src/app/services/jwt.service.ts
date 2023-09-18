@@ -15,4 +15,10 @@ export class JwtDecoderService {
     this.storage.set('tokenKey', token);
     this.storage.set('isAdmin', tokenContent.isAdmin);
   }
+
+  isExpired(): boolean {
+    const token = this.storage.get('tokenKey') as string;
+    if (token === null || token === undefined) return true;
+    return new JwtHelperService().isTokenExpired(token);
+  }
 }
