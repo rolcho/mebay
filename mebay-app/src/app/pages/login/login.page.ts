@@ -88,7 +88,10 @@ export class LoginPage implements OnInit {
       this.userService.login(this.loginFormGroup.value).subscribe({
         next: (response: IUserLoginResponse) => {
           this.jwt.decode(response.token);
-          this.storage.set('credits', response.credits)!;
+          this.storage.set('credits', response.credits);
+          this.storage.set('userId', response.id);
+          this.storage.set('tokenKey', response.token);
+          this.storage.set('name', response.name);
           this.toast.presentToast('You are logged in');
           this.loginFormGroup.reset();
           this.router.navigate(['home']);
