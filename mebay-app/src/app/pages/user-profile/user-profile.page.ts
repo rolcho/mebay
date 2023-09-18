@@ -90,6 +90,10 @@ export class UserProfilePage implements OnInit {
     this.router.navigateByUrl('/login');
   }
 
+  logout() {
+    this.userService.logout();
+    this.goToLogin();
+  }
   deleteProfile() {
     if (this.userProfileFormGroup.valid) {
       console.log(this.userProfileFormGroup.controls['existingPassword'].value);
