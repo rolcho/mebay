@@ -9,13 +9,11 @@ import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import {
   Observable,
-  delay,
-  retryWhen,
-  tap,
-  map,
   catchError,
-  EMPTY,
   finalize,
+  from,
+  switchMap,
+  tap,
   throwError,
 } from 'rxjs';
 
@@ -29,26 +27,20 @@ export class LoaderService implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.loadingCtrl.getTop().then((hasLoading) => {
-      if (!hasLoading) {
-        this.loadingCtrl
-          .create({
-            spinner: 'circular',
-            translucent: true,
-          })
-          .then((loading) => loading.present());
-      }
-    });
+    let loading: HTMLIonLoadingElement;
 
-    return next.handle(req).pipe(
-      catchError((err) => {
-        return throwError(err);
-      }),
-      finalize(() => {
-        this.loadingCtrl.getTop().then((hasLoading) => {
-          if (hasLoading) this.loadingCtrl.dismiss();
-        });
+    return from(
+      this.loadingCtrl.create({
+        spinner: 'circular',
+        translucent: true,
       })
+    ).pipe(
+      tap((loadingElement) => {
+        loading = loadingElement;
+        loading.present();
+      }),
+      switchMap(() => next.handle(req)),
+      finalize(() => loading.dismiss())
     );
   }
 }
