@@ -166,7 +166,7 @@ export class UserProfilePage implements OnInit {
                     );
                     return;
                   }
-                  if (response.status === 409)
+                  if (response.status === HttpStatusCode.Unauthorized)
                     this.userProfileFormGroup.controls[
                       'existingPassword'
                     ].setErrors(Validators.required);

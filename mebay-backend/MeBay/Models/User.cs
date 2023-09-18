@@ -17,6 +17,7 @@ namespace MeBay.Models
 
         [Required]
         public required string Email { get; set; }
+        public int Credits { get; set; } = 0;
 
         public string Role { get; set; } = "User";
 

@@ -13,7 +13,11 @@ import { Router } from '@angular/router';
 import { IUserLoginRequest } from '../../models/user-login-request.dto';
 import { UserService } from '../../services/user.service';
 import { IUserLoginResponse } from '../../models/user-login-response.dto';
-import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HttpErrorResponse,
+  HttpStatusCode,
+} from '@angular/common/http';
 import LoginFormJson from '../../../assets/login_form.json';
 import { JwtDecoderService } from '../../services/jwt.service';
 import { ToastService } from '../../services/toast.service';
@@ -84,18 +88,19 @@ export class LoginPage implements OnInit {
       this.userService.login(this.loginFormGroup.value).subscribe({
         next: (response: IUserLoginResponse) => {
           this.jwt.decode(response.token);
+          this.storage.set('credits', response.credits)!;
           this.toast.presentToast('You are logged in');
           this.loginFormGroup.reset();
-          this.router.navigateByUrl('/user-profile');
+          this.router.navigate(['home']);
         },
         error: (response: HttpErrorResponse) => {
           this.loginFormGroup.setErrors(Validators.required);
           console.log(response.status);
-          if (response.status === 404)
+          if (response.status === HttpStatusCode.Conflict)
             this.loginFormGroup.controls['email'].setErrors(
               Validators.required
             );
-          if (response.status === 401)
+          if (response.status === HttpStatusCode.Unauthorized)
             this.loginFormGroup.controls['password'].setErrors(
               Validators.required
             );

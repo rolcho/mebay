@@ -34,9 +34,13 @@ namespace MeBay.Services
             {
                 return new UnauthorizedResult();
             }
-            var jwt = new AccessToken();
-            jwt.Token = _jwtService.CreateToken(userByEmail.Id, userByEmail.Name, userByEmail.Role);
-            return new OkObjectResult(jwt);
+            var userData = _mapper.Map<UserLoginResponseDto>(userByEmail);
+            userData.Token = _jwtService.CreateToken(
+                userByEmail.Id,
+                userByEmail.Name,
+                userByEmail.Role
+            );
+            return new OkObjectResult(userData);
         }
 
         public async Task<IActionResult> Registartion(UserRegisterDto user)
@@ -142,6 +146,33 @@ namespace MeBay.Services
             _dbContext.Remove(userById);
             await _dbContext.SaveChangesAsync();
             return new NoContentResult();
+        }
+
+        public async Task<IActionResult> CreditTransfer(
+            CreditTransfer creditTransfer,
+            HttpContext httpContext
+        )
+        {
+            var authenticatedUser = httpContext.User;
+            var claims = authenticatedUser.Claims;
+            var tokenData = _jwtService.DecodeToken(claims);
+
+            var userById = await _dbContext.Users.FindAsync(creditTransfer.Id);
+            if (userById == null)
+            {
+                return new NotFoundResult();
+            }
+            if (creditTransfer.Id != tokenData.UserId && tokenData.Role != "Admin")
+            {
+                return new ForbidResult();
+            }
+            if (userById.Credits + creditTransfer.Credits < 0)
+            {
+                return new BadRequestResult();
+            }
+            userById.Credits += creditTransfer.Credits;
+            await _dbContext.SaveChangesAsync();
+            return new OkObjectResult(new { Credits = userById.Credits });
         }
     }
 }
