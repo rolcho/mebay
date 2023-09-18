@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HomePage } from './home.page';
-import { IonicModule } from '@ionic/angular';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('HomePage', () => {
   let component: HomePage;
@@ -9,7 +8,7 @@ describe('HomePage', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IonicModule],
+      imports: [HttpClientModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomePage);
@@ -19,19 +18,5 @@ describe('HomePage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should display meBay', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(
-      compiled.querySelector('ion-toolbar ion-title')?.textContent
-    ).toContain('meBay');
-  });
-
-  it('should not display Second try', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(
-      compiled.querySelector('ion-toolbar ion-title')?.textContent
-    ).not.toContain('Second try');
   });
 });

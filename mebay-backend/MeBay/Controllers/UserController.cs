@@ -54,5 +54,12 @@ namespace MeBay.Controllers.UserController
         {
             return await _userRepository.DeleteUser(id, HttpContext);
         }
+
+        [HttpPost("credit")]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> ChangeCredit([FromBody] CreditTransfer creditTransfer)
+        {
+            return await _userRepository.CreditTransfer(creditTransfer, HttpContext);
+        }
     }
 }

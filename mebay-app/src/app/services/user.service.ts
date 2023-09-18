@@ -69,4 +69,8 @@ export class UserService {
   get token(): string {
     return this.storage.get('tokenKey')!;
   }
+
+  get credits(): number {
+    return this.storage.get('credits')!;
+  }
 }

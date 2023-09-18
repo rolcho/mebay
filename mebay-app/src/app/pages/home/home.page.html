@@ -1,0 +1,31 @@
+<ion-content [fullscreen]="true">
+  <div class="top-center">
+    <ion-card color="primary">
+      <ion-card-header>
+        <ion-card-title>{{userName}} </ion-card-title>
+        <ion-card-subtitle>Credits: {{credits}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="topUp">
+          <form [formGroup]="amountForm">
+            <ion-input
+              type="number"
+              label="Amount: "
+              color="light"
+              fill="solid"
+              value="0"
+              formControlName="amount"
+              errorText="Top-up can be only positive"
+            ></ion-input>
+          </form>
+          <ion-button color="warning" size="block" (click)="topUpCredit()"
+            >Send money</ion-button
+          >
+        </div>
+        <ion-button color="light" size="block" (click)="topUp=!topUp"
+          >{{topUp ? 'Cancel' : 'Top-up credits'}}</ion-button
+        >
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
