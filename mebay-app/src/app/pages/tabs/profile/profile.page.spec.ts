@@ -1,11 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
-import { TabsComponent } from './tabs.component';
+import { UserProfilePage } from './profile.page';
+import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { convertToParamMap, ParamMap } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { UserService } from '../../services/user.service';
-import { HttpClientModule } from '@angular/common/http';
 
 class ActivatedRouteMock {
   private paramMapSubject = new BehaviorSubject(convertToParamMap({}));
@@ -16,15 +14,14 @@ class ActivatedRouteMock {
   }
 }
 
-describe('TabsComponent', () => {
-  let component: TabsComponent;
-  let fixture: ComponentFixture<TabsComponent>;
+describe('UserProfilePage', () => {
+  let component: UserProfilePage;
+  let fixture: ComponentFixture<UserProfilePage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), HttpClientModule],
+      imports: [HttpClientModule],
       providers: [
-        UserService,
         {
           provide: ActivatedRoute,
           useClass: ActivatedRouteMock, // Provide the mock here
@@ -32,12 +29,12 @@ describe('TabsComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TabsComponent);
+    fixture = TestBed.createComponent(UserProfilePage);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should create', () => {
-    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 });

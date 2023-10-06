@@ -1,10 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
-import { TabsComponent } from './tabs.component';
-import { ActivatedRoute } from '@angular/router';
-import { convertToParamMap, ParamMap } from '@angular/router';
+import { TabsPage } from './tabs.page';
 import { BehaviorSubject } from 'rxjs';
-import { UserService } from '../../services/user.service';
+import { ActivatedRoute, ParamMap, convertToParamMap } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 class ActivatedRouteMock {
@@ -15,16 +12,14 @@ class ActivatedRouteMock {
     this.paramMapSubject.next(convertToParamMap(params));
   }
 }
-
-describe('TabsComponent', () => {
-  let component: TabsComponent;
-  let fixture: ComponentFixture<TabsComponent>;
+describe('TabsPage', () => {
+  let component: TabsPage;
+  let fixture: ComponentFixture<TabsPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), HttpClientModule],
+      imports: [HttpClientModule],
       providers: [
-        UserService,
         {
           provide: ActivatedRoute,
           useClass: ActivatedRouteMock, // Provide the mock here
@@ -32,12 +27,12 @@ describe('TabsComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TabsComponent);
+    fixture = TestBed.createComponent(TabsPage);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should create', () => {
-    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 });

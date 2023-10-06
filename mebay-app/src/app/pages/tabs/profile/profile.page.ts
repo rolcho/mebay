@@ -8,18 +8,18 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AlertController, IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import {
   HttpClientModule,
   HttpErrorResponse,
   HttpStatusCode,
 } from '@angular/common/http';
-import { UserService } from '../../services/user.service';
-import { IUserRegisterRequest } from '../../models/user-register-request.dto.ts';
-import { IUserRegisterResponse } from '../../models/user-register-response.dto.ts';
-import UserProfileFormJson from '../../../assets/user_profile_form.json';
-import { ToastService } from '../../services/toast.service';
+import { UserService } from '../../../services/user.service';
+import { IUserRegisterRequest } from '../../../models/user-register-request.dto.ts';
+import { IUserRegisterResponse } from '../../../models/user-register-response.dto.ts';
+import UserProfileFormJson from '../../../../assets/user_profile_form.json';
+import { ToastService } from '../../../services/toast.service';
 
 export interface Options {
   label?: string;
@@ -34,9 +34,9 @@ export interface FormControlObject {
 }
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.page.html',
-  styleUrls: ['./user-profile.page.scss'],
+  selector: 'app-profile',
+  templateUrl: './profile.page.html',
+  styleUrls: ['./profile.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule],
   providers: [HttpClientModule],
@@ -87,7 +87,7 @@ export class UserProfilePage implements OnInit {
   }
 
   goToLogin() {
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/');
   }
 
   logout() {
@@ -96,11 +96,8 @@ export class UserProfilePage implements OnInit {
   }
   deleteProfile() {
     if (this.userProfileFormGroup.valid) {
-      console.log(this.userProfileFormGroup.controls['existingPassword'].value);
-
       this.user.password =
         this.userProfileFormGroup.controls['existingPassword'].value;
-      console.log(this.user);
       this.userService.login(this.user).subscribe({
         next: () => {
           this.userService.delete(parseInt(this.userService.userId)).subscribe({
@@ -146,7 +143,6 @@ export class UserProfilePage implements OnInit {
                 this.userProfileFormGroup.controls['password'].value;
             this.user.name = this.userProfileFormGroup.controls['name'].value;
             this.user.email = this.userProfileFormGroup.controls['email'].value;
-            console.log(this.user);
             this.userService
               .update(this.user, parseInt(this.userService.userId))
               .subscribe({

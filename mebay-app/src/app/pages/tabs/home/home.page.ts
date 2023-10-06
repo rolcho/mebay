@@ -8,11 +8,11 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { JwtDecoderService } from '../../services/jwt.service';
+import { JwtDecoderService } from '../../../services/jwt.service';
 import { Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ITopUp } from 'src/app/models/user-topup.dto';
+import { ITopUp } from '../../../models/user-topup.dto';
 
 @Component({
   selector: 'app-home',
@@ -38,8 +38,10 @@ export class HomePage implements OnInit {
     });
   }
 
-  ngOnInit() {
-    if (this.jwtDecoder.isExpired()) {
+  ngOnInit(): void {}
+
+  ngDoCheck() {
+    if (this.jwtDecoder.isExpired() || this.user.token === undefined) {
       this.router.navigate(['login']);
       return;
     }
