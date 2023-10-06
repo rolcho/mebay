@@ -87,21 +87,12 @@ export class RegistrationPage implements OnInit {
         },
         error: (response: HttpErrorResponse) => {
           this.registrationFormGroup.setErrors(Validators.required);
-          console.log('formgroup ' + this.registrationFormGroup.value);
-          console.log('registration error ' + response.status);
           if (response.status === 409) {
             this.registrationFormGroup.controls['email'].setErrors(
               Validators.required
             );
             return;
           }
-          // if (response.status === 400)
-          //   this.registrationFormGroup.controls['password'].setErrors(
-          //     Validators.required
-          //   );
-          // this.registrationFormGroup.controls['confirmPassword'].setErrors(
-          //   Validators.required
-          // );
         },
       });
     }

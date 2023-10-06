@@ -8,8 +8,8 @@ import { StorageService } from './storage.service';
 export class JwtDecoderService {
   constructor(private storage: StorageService) {}
 
-  decode(token: string) {
-    const tokenContent = new JwtHelperService().decodeToken(token);
+  async decode(token: string) {
+    const tokenContent = await new JwtHelperService().decodeToken(token);
     this.storage.set('userId', parseInt(tokenContent.userId));
     this.storage.set('name', tokenContent.name);
     this.storage.set('tokenKey', token);
