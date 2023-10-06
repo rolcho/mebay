@@ -63,8 +63,8 @@ export class UserService {
     return this.storage.get('userId')!;
   }
 
-  get isAuthenticate(): boolean {
-    return this.storage.get('token') !== null;
+  get isAuthenticated(): boolean {
+    return this.storage.get('tokenKey') !== null;
   }
 
   get isAdmin(): boolean {
@@ -78,6 +78,7 @@ export class UserService {
   get credits(): number {
     return this.storage.get('credits')!;
   }
+
   set credits(amount: number) {
     this.storage.set('credits', amount)!;
   }

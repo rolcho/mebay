@@ -86,17 +86,16 @@ export class LoginPage implements OnInit {
   submitForm() {
     if (this.loginFormGroup.valid) {
       this.userService.login(this.loginFormGroup.value).subscribe({
-        next: (response: IUserLoginResponse) => {
-          this.jwt.decode(response.token);
+        next: async (response: IUserLoginResponse) => {
+          await this.jwt.decode(response.token);
           this.storage.set('credits', response.credits)!;
-          this.toast.presentToast('You are logged in');
+          // this.toast.presentToast('You are logged in');
           this.loginFormGroup.reset();
-          this.router.navigate(['home']);
+          await this.router.navigate(['tabs/home']);
         },
         error: (response: HttpErrorResponse) => {
           this.loginFormGroup.setErrors(Validators.required);
-          console.log(response.status);
-          if (response.status === HttpStatusCode.Conflict)
+          if (response.status === HttpStatusCode.NotFound)
             this.loginFormGroup.controls['email'].setErrors(
               Validators.required
             );
