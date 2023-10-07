@@ -40,5 +40,25 @@
         >
       </ion-card-content>
     </ion-card>
+    <ion-card *ngIf="this.isAdmin">
+      <ion-card-header>
+        <ion-card-title>List of users</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button
+          id="btn-list"
+          color="warning"
+          size="block"
+          (click)="listUsers()"
+          >Show users</ion-button
+        >
+        <div *ngFor="let user of userList">
+          <ion-card-title style="padding-top: 16px"
+            >{{user.name}}</ion-card-title
+          >
+          <ion-card-subtitle>{{user.email}}</ion-card-subtitle>
+        </div>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

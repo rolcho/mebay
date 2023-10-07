@@ -51,6 +51,10 @@ export class UserService {
     return this.http.post<IUserLoginResponse>(`${this.BASE_URL}/login`, user);
   }
 
+  listUsers(): Observable<IUserRegisterResponse[]> {
+    return this.http.get<IUserRegisterResponse[]>(`${this.BASE_URL}/list`);
+  }
+
   logout(): void {
     this.storage.clear();
   }
@@ -68,7 +72,7 @@ export class UserService {
   }
 
   get isAdmin(): boolean {
-    return this.storage.get('isAdmin') === true;
+    return this.storage.get('isAdmin') === 'True';
   }
 
   get token(): string {

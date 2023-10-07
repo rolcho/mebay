@@ -20,6 +20,7 @@ import { IUserRegisterRequest } from '../../../models/user-register-request.dto.
 import { IUserRegisterResponse } from '../../../models/user-register-response.dto.ts';
 import UserProfileFormJson from '../../../../assets/user_profile_form.json';
 import { ToastService } from '../../../services/toast.service';
+import { IUserLoginResponse } from 'src/app/models/user-login-response.dto';
 
 export interface Options {
   label?: string;
@@ -46,6 +47,8 @@ export class UserProfilePage implements OnInit {
   userId?: number;
   userProfileFormGroup: FormGroup;
   userProfileForm = UserProfileFormJson;
+  isAdmin = false;
+  userList: IUserRegisterResponse[] = [];
 
   constructor(
     private router: Router,
@@ -94,6 +97,19 @@ export class UserProfilePage implements OnInit {
     this.userService.logout();
     this.goToLogin();
   }
+
+  listUsers() {
+    this.userService.listUsers().subscribe({
+      next: (response: IUserRegisterResponse[]) => {
+        this.userList = response;
+        console.log(response);
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+  }
+
   deleteProfile() {
     if (this.userProfileFormGroup.valid) {
       this.user.password =
@@ -119,6 +135,10 @@ export class UserProfilePage implements OnInit {
     } else {
       this.toast.presentToast('You must enter your password!');
     }
+  }
+
+  ngDoCheck() {
+    this.isAdmin = this.userService.isAdmin;
   }
 
   submitForm() {
