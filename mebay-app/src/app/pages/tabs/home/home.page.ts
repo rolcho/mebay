@@ -21,7 +21,7 @@ import { ITopUp } from '../../../models/user-topup.dto';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule],
 })
-export class HomePage implements OnInit {
+export class HomePage {
   userName?: string;
   credits?: number;
   topUp: boolean = false;
@@ -38,9 +38,7 @@ export class HomePage implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
-
-  ngDoCheck() {
+  ionViewWillEnter() {
     if (this.jwtDecoder.isExpired() || this.user.token === undefined) {
       this.router.navigate(['login']);
       return;

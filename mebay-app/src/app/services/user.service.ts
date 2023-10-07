@@ -8,6 +8,7 @@ import { IUserRegisterResponse } from '../models/user-register-response.dto.ts';
 import { HttpClient } from '@angular/common/http';
 import { StorageService } from './storage.service';
 import { ITopUp } from '../models/user-topup.dto';
+import { IUserResponse } from '../models/user-response.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -51,8 +52,8 @@ export class UserService {
     return this.http.post<IUserLoginResponse>(`${this.BASE_URL}/login`, user);
   }
 
-  listUsers(): Observable<IUserRegisterResponse[]> {
-    return this.http.get<IUserRegisterResponse[]>(`${this.BASE_URL}/list`);
+  listUsers(): Observable<IUserResponse[]> {
+    return this.http.get<IUserResponse[]>(`${this.BASE_URL}/list`);
   }
 
   logout(): void {
