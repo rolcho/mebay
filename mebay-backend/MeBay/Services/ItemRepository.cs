@@ -5,6 +5,7 @@ using MeBay.Data;
 using Microsoft.EntityFrameworkCore;
 using Mebay.Models;
 using MeBay.Interfaces;
+using System.Net;
 
 namespace MeBay.Services
 {
@@ -98,6 +99,23 @@ namespace MeBay.Services
             if (userById == null)
             {
                 return new NotFoundResult();
+            }
+            if (Uri.TryCreate(item.Picture, UriKind.Absolute, out var imageUri))
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    try
+                    {
+                        var response = await httpClient.GetAsync(imageUri);
+
+                        if (response.StatusCode == HttpStatusCode.NotFound)
+                        {
+                            item.Picture =
+                                "https://www.freeiconspng.com/uploads/no-image-icon-11.PNG";
+                        }
+                    }
+                    catch (HttpRequestException) { }
+                }
             }
 
             var newItem = _mapper.Map<Item>(item);
