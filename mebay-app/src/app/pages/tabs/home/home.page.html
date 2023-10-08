@@ -34,9 +34,9 @@
         </ion-list-header>
         <div *ngFor="let item of boughtItems">
           <ion-item>
-            <ion-label>
+            <ion-content>
               <strong>{{ item.name}}</strong><br />
-              {{ item.seller.name}} / {{ item.seller.email}}</ion-label
+              {{ item.seller.name}} / {{ item.seller.email}}</ion-content
             >
           </ion-item>
         </div>

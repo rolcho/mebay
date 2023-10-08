@@ -15,8 +15,7 @@ namespace MeBay.Models
         [Required]
         public required string Description { get; set; }
 
-        public string Picture { get; set; } =
-            "https://www.freeiconspng.com/uploads/no-image-icon-11.PNG";
+        public string? Picture { get; set; }
 
         public int Price { get; set; } = 0;
         public int InstantPrice { get; set; } = 0;

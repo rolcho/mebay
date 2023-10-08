@@ -100,6 +100,12 @@ namespace MeBay.Services
             {
                 return new NotFoundResult();
             }
+
+            if (item.Picture == null)
+            {
+                item.Picture = "https://www.freeiconspng.com/uploads/no-image-icon-11.PNG";
+            }
+
             if (Uri.TryCreate(item.Picture, UriKind.Absolute, out var imageUri))
             {
                 using (var httpClient = new HttpClient())
@@ -108,13 +114,16 @@ namespace MeBay.Services
                     {
                         var response = await httpClient.GetAsync(imageUri);
 
-                        if (response.StatusCode == HttpStatusCode.NotFound)
+                        if (response.StatusCode != HttpStatusCode.OK)
                         {
                             item.Picture =
                                 "https://www.freeiconspng.com/uploads/no-image-icon-11.PNG";
                         }
                     }
-                    catch (HttpRequestException) { }
+                    catch (HttpRequestException)
+                    {
+                        item.Picture = "https://www.freeiconspng.com/uploads/no-image-icon-11.PNG";
+                    }
                 }
             }
 
