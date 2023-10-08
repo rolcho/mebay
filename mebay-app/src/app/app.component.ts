@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { TabsComponent } from './components/tabs/tabs.component';
-import { NgIf } from '@angular/common';
 import { UserService } from './services/user.service';
 
 @Component({
@@ -9,7 +7,7 @@ import { UserService } from './services/user.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonicModule, TabsComponent, NgIf],
+  imports: [IonicModule],
   providers: [UserService],
 })
 export class AppComponent {

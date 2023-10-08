@@ -25,8 +25,12 @@ namespace MeBay.Models
 
         public DateTime SellingDate { get; set; } = DateTime.UtcNow.AddDays(7);
 
-        [ForeignKey("User")]
-        public required int UserId { get; set; }
-        public required User User { get; set; }
+        [ForeignKey("Seller")]
+        public required int SellerId { get; set; }
+        public required User Seller { get; set; }
+
+        [ForeignKey("Buyer")]
+        public int? BuyerId { get; set; }
+        public User? Buyer { get; set; }
     }
 }

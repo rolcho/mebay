@@ -1,0 +1,14 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Credits to buy: ${{ [(credits)] }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="primary">
+  <ion-card *ngIf="!items?.length">
+    <ion-card-header>Nothing for sale</ion-card-header>
+  </ion-card>
+  <div *ngFor="let item of items" class="top-center">
+    <app-item [item]="item" (buyEvent)="buyItem($event)"></app-item>
+  </div>
+</ion-content>
