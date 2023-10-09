@@ -12,13 +12,13 @@ services:
   frontend:
     build:
       context: ./mebay-app
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.Development
     ports:
       - "80:80"
   backend:
     build:
       context: ./mebay-backend/MeBay
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.Development
     ports:
       - "5001:80"
     environment:
