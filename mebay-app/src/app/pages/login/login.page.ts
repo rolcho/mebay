@@ -89,7 +89,7 @@ export class LoginPage implements OnInit {
         next: async (response: IUserLoginResponse) => {
           await this.jwt.decode(response.token);
           this.storage.set('credits', response.credits)!;
-          // this.toast.presentToast('You are logged in');
+          this.toast.presentToast('You are logged in');
           this.loginFormGroup.reset();
           await this.router.navigate(['tabs/home']);
         },

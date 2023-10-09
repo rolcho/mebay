@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Your items for sale</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="primary">
+  <div class="top-center">
+    <ion-card>
+      <ion-card-content>
+        <div *ngIf="upload">
+          <form [formGroup]="addItemFormGroup" (ngSubmit)="submitForm()">
+            <ion-input
+              *ngFor="let c of addItemForm"
+              [type]="c.options.type"
+              [formControlName]="c.key"
+              [label]="c.options.label"
+              [errorText]="c.options.errorText"
+              labelPlacement="floating"
+            ></ion-input>
+            <ion-button
+              type="submit"
+              color="warning"
+              size="block"
+              [disabled]="!addItemFormGroup.valid"
+              >Upload</ion-button
+            >
+          </form>
+        </div>
+        <ion-button color="primary" size="block" (click)="upload=!upload"
+          >{{upload ? 'Cancel' : 'Add item'}}</ion-button
+        >
+      </ion-card-content>
+      <ion-card-content *ngIf="!items?.length"
+        >Nothing to sell</ion-card-content
+      >
+    </ion-card>
+  </div>
+  <div *ngFor="let item of items" class="top-center">
+    <app-item-sale
+      [item]="item"
+      (deleteEvent)="deleteItem($event)"
+    ></app-item-sale>
+  </div>
+</ion-content>

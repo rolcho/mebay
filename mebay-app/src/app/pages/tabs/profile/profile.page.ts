@@ -20,6 +20,7 @@ import { IUserRegisterRequest } from '../../../models/user-register-request.dto.
 import { IUserRegisterResponse } from '../../../models/user-register-response.dto.ts';
 import UserProfileFormJson from '../../../../assets/user_profile_form.json';
 import { ToastService } from '../../../services/toast.service';
+import { IUserResponse } from '../../../models/user-response.dto';
 
 export interface Options {
   label?: string;
@@ -41,11 +42,13 @@ export interface FormControlObject {
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule],
   providers: [HttpClientModule],
 })
-export class UserProfilePage implements OnInit {
+export class UserProfilePage {
   user: IUserRegisterRequest = { name: '', email: '', password: '' };
   userId?: number;
   userProfileFormGroup: FormGroup;
   userProfileForm = UserProfileFormJson;
+  isAdmin = false;
+  userList: IUserResponse[] = [];
 
   constructor(
     private router: Router,
@@ -71,7 +74,7 @@ export class UserProfilePage implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.userId = parseInt(this.userService.userId);
     this.userService.profile(this.userId).subscribe({
       next: (response: IUserRegisterResponse) => {
@@ -84,6 +87,11 @@ export class UserProfilePage implements OnInit {
         console.log(response);
       },
     });
+    this.isAdmin = this.userService.isAdmin;
+  }
+
+  ionViewWillLeave() {
+    this.userList = [];
   }
 
   goToLogin() {
@@ -94,6 +102,19 @@ export class UserProfilePage implements OnInit {
     this.userService.logout();
     this.goToLogin();
   }
+
+  listUsers() {
+    this.userService.listUsers().subscribe({
+      next: (response: IUserResponse[]) => {
+        this.userList = response;
+        console.log(response);
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+  }
+
   deleteProfile() {
     if (this.userProfileFormGroup.valid) {
       this.user.password =

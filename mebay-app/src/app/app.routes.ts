@@ -28,11 +28,16 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'working',
+        path: 'buy',
         loadComponent: () =>
-          import('./pages/tabs/working/working.page').then(
-            (m) => m.WorkingPage
-          ),
+          import('./pages/tabs/buy/buy.page').then((m) => m.BuyPage),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'sell',
+        loadComponent: () =>
+          import('./pages/tabs/sell/sell.page').then((m) => m.SellPage),
+        canActivate: [AuthGuard],
       },
     ],
   },

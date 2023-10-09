@@ -68,7 +68,7 @@ namespace MeBay.Services
 
         public async Task<IActionResult> GetAllUsers(HttpContext httpContext)
         {
-            var users = await _dbContext.Users.ToListAsync();
+            var users = await _dbContext.Users.OrderBy(u => u.Id).ToListAsync();
             return new OkObjectResult(_mapper.Map<List<UserResponseDto>>(users));
         }
 
