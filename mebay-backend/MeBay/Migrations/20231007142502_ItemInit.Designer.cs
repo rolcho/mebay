@@ -3,6 +3,7 @@ using System;
 using MeBay.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MeBay.Migrations
 {
     [DbContext(typeof(MeBayDbContext))]
-    partial class MeBayDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231007142502_ItemInit")]
+    partial class ItemInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +32,6 @@ namespace MeBay.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("BuyerId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -54,17 +54,15 @@ namespace MeBay.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SellerId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("SellingDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("BuyerId");
-
-                    b.HasIndex("SellerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Items");
                 });
@@ -109,19 +107,13 @@ namespace MeBay.Migrations
 
             modelBuilder.Entity("MeBay.Models.Item", b =>
                 {
-                    b.HasOne("MeBay.Models.User", "Buyer")
+                    b.HasOne("MeBay.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("BuyerId");
-
-                    b.HasOne("MeBay.Models.User", "Seller")
-                        .WithMany()
-                        .HasForeignKey("SellerId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Buyer");
-
-                    b.Navigation("Seller");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

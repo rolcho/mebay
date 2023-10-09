@@ -1,0 +1,42 @@
+[
+  {
+    "key": "name",
+    "type": "input",
+    "options": {
+      "label": "Item",
+      "required": true,
+      "type": "text",
+      "errorText": "Enter the name of the item"
+    }
+  },
+  {
+    "key": "description",
+    "type": "input",
+    "options": {
+      "label": "Description",
+      "required": true,
+      "type": "text",
+      "errorText": "Enter some description"
+    }
+  },
+  {
+    "key": "picture",
+    "type": "input",
+    "options": {
+      "label": "Image address",
+      "required": false,
+      "type": "text",
+      "errorText": "Enter link of the picture"
+    }
+  },
+  {
+    "key": "instantPrice",
+    "type": "input",
+    "options": {
+      "label": "Price",
+      "required": true,
+      "type": "tel",
+      "errorText": "Enter the price you want to get"
+    }
+  }
+]

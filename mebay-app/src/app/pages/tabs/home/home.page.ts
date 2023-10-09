@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ITopUp } from '../../../models/user-topup.dto';
+import { ItemService } from '../../../services/item.service';
+import { IItemListingResponse } from '../../../models/item-listing-response.dto';
 
 @Component({
   selector: 'app-home',
@@ -21,16 +23,20 @@ import { ITopUp } from '../../../models/user-topup.dto';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule],
 })
-export class HomePage implements OnInit {
+export class HomePage {
   userName?: string;
   credits?: number;
   topUp: boolean = false;
   amountForm: FormGroup;
   amount?: number;
+  soldItems?: IItemListingResponse[];
+  boughtItems?: IItemListingResponse[];
+
   constructor(
     private jwtDecoder: JwtDecoderService,
     private router: Router,
     private user: UserService,
+    private itemService: ItemService,
     private formBuilder: FormBuilder
   ) {
     this.amountForm = this.formBuilder.group({
@@ -38,15 +44,29 @@ export class HomePage implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
-
-  ngDoCheck() {
+  ionViewWillEnter() {
     if (this.jwtDecoder.isExpired() || this.user.token === undefined) {
       this.router.navigate(['login']);
       return;
     }
     this.userName = this.user.name;
     this.credits = this.user.credits;
+    this.itemService.getBoughtItems().subscribe({
+      next: (items: IItemListingResponse[]) => {
+        this.boughtItems = items;
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+    this.itemService.getSoldItems().subscribe({
+      next: (items: IItemListingResponse[]) => {
+        this.soldItems = items;
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
   }
 
   topUpCredit() {

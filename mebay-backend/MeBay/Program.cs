@@ -12,6 +12,7 @@ var config = builder.Configuration;
 
 builder.Services.AddTransient<IJWTService, JWTService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<MeBayDbContext>(options =>
 {
