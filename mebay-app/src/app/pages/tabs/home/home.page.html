@@ -28,22 +28,26 @@
       </ion-card-content>
     </ion-card>
     <ion-card *ngIf="boughtItems?.length">
-      <ion-card-title>Sold items</ion-card-title>
-      <div *ngFor="let item of boughtItems">
-        <h3 style="margin-bottom: 0">{{ item.name}}</h3>
-        <p style="margin-top: 0">
-          {{ item.buyer!.name}} / {{ item.buyer!.email}}
-        </p>
-      </div>
+      <ion-card-content>
+        <ion-card-title>Bought items</ion-card-title>
+        <div *ngFor="let item of boughtItems">
+          <h3 style="margin-bottom: 0">{{ item.name}}</h3>
+          <p style="margin-top: 0">
+            {{ item.buyer!.name}} / {{ item.buyer!.email}}
+          </p>
+        </div>
+      </ion-card-content>
     </ion-card>
     <ion-card *ngIf="soldItems?.length">
-      <ion-card-title>Sold items</ion-card-title>
-      <div *ngFor="let item of soldItems">
-        <h3 style="margin-bottom: 0">{{ item.name}}</h3>
-        <p style="margin-top: 0">
-          {{ item.buyer!.name}} / {{ item.buyer!.email}}
-        </p>
-      </div>
+      <ion-card-content>
+        <ion-card-title>Sold items</ion-card-title>
+        <div *ngFor="let item of soldItems">
+          <h3 style="margin-bottom: 0">{{ item.name}}</h3>
+          <p style="margin-top: 0">
+            {{ item.buyer!.name}} / {{ item.buyer!.email}}
+          </p>
+        </div>
+      </ion-card-content>
     </ion-card>
   </div>
 </ion-content>
