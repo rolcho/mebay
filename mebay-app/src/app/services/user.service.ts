@@ -56,6 +56,10 @@ export class UserService {
     return this.http.get<IUserResponse[]>(`${this.BASE_URL}/list`);
   }
 
+  getUser(): Observable<IUserResponse> {
+    return this.http.get<IUserResponse>(`${this.BASE_URL}/${this.userId}`);
+  }
+
   logout(): void {
     this.storage.clear();
   }
