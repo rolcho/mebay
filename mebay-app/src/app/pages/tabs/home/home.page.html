@@ -13,7 +13,7 @@
               label="Amount: "
               color="primary"
               fill="solid"
-              value="0"
+              value=""
               formControlName="amount"
               errorText="Top-up can be only positive"
             ></ion-input>
@@ -28,34 +28,22 @@
       </ion-card-content>
     </ion-card>
     <ion-card *ngIf="boughtItems?.length">
-      <ion-list>
-        <ion-list-header>
-          <ion-label>Bought items</ion-label>
-        </ion-list-header>
-        <div *ngFor="let item of boughtItems">
-          <ion-item>
-            <ion-content>
-              <strong>{{ item.name}}</strong><br />
-              {{ item.seller.name}} / {{ item.seller.email}}</ion-content
-            >
-          </ion-item>
-        </div>
-      </ion-list>
+      <ion-card-title>Sold items</ion-card-title>
+      <div *ngFor="let item of boughtItems">
+        <h3 style="margin-bottom: 0">{{ item.name}}</h3>
+        <p style="margin-top: 0">
+          {{ item.buyer!.name}} / {{ item.buyer!.email}}
+        </p>
+      </div>
     </ion-card>
     <ion-card *ngIf="soldItems?.length">
-      <ion-list>
-        <ion-list-header>
-          <ion-label>Sold items</ion-label>
-        </ion-list-header>
-        <div *ngFor="let item of soldItems">
-          <ion-item>
-            <ion-label>
-              <strong>{{ item.name}}</strong><br />
-              {{ item.buyer?.name}} / {{ item.buyer?.email}}</ion-label
-            >
-          </ion-item>
-        </div>
-      </ion-list>
+      <ion-card-title>Sold items</ion-card-title>
+      <div *ngFor="let item of soldItems">
+        <h3 style="margin-bottom: 0">{{ item.name}}</h3>
+        <p style="margin-top: 0">
+          {{ item.buyer!.name}} / {{ item.buyer!.email}}
+        </p>
+      </div>
     </ion-card>
   </div>
 </ion-content>

@@ -15,6 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ITopUp } from '../../../models/user-topup.dto';
 import { ItemService } from '../../../services/item.service';
 import { IItemListingResponse } from '../../../models/item-listing-response.dto';
+import { IUserResponse } from '../../../models/user-response.dto';
 
 @Component({
   selector: 'app-home',
@@ -31,26 +32,36 @@ export class HomePage {
   amount?: number;
   soldItems?: IItemListingResponse[];
   boughtItems?: IItemListingResponse[];
+  user?: IUserResponse;
 
   constructor(
     private jwtDecoder: JwtDecoderService,
     private router: Router,
-    private user: UserService,
+    private userService: UserService,
     private itemService: ItemService,
     private formBuilder: FormBuilder
   ) {
     this.amountForm = this.formBuilder.group({
-      amount: [0, [Validators.required, Validators.min(0)]],
+      amount: [, [Validators.required, Validators.min(1)]],
     });
   }
 
   ionViewWillEnter() {
-    if (this.jwtDecoder.isExpired() || this.user.token === undefined) {
+    if (this.jwtDecoder.isExpired() || this.userService.token === undefined) {
       this.router.navigate(['login']);
       return;
     }
-    this.userName = this.user.name;
-    this.credits = this.user.credits;
+
+    this.userService.getUser().subscribe({
+      next: (user: IUserResponse) => {
+        this.userName = user.name;
+        this.credits = user.credits;
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+
     this.itemService.getBoughtItems().subscribe({
       next: (items: IItemListingResponse[]) => {
         this.boughtItems = items;
@@ -72,13 +83,13 @@ export class HomePage {
   topUpCredit() {
     if (this.amountForm.valid) {
       this.amount = this.amountForm.get('amount')!.value;
-      this.user
-        .topUp({ credits: this.amount!, id: parseInt(this.user.userId) })
+      this.userService
+        .topUp({ credits: this.amount!, id: parseInt(this.userService.userId) })
         .subscribe({
           next: (response: ITopUp) => {
             this.topUp = !this.topUp;
             this.credits = response.credits;
-            this.user.credits = response.credits;
+            this.userService.credits = response.credits;
           },
           error: (err: HttpErrorResponse) => {
             console.log(err.status);

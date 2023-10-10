@@ -23,7 +23,7 @@
     "key": "picture",
     "type": "input",
     "options": {
-      "label": "Image address",
+      "label": "Image web link",
       "required": false,
       "type": "text",
       "errorText": "Enter link of the picture"

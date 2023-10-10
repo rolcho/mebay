@@ -7,6 +7,7 @@ import { JwtDecoderService } from '../../../services/jwt.service';
 import { ItemService } from '../../../services/item.service';
 import { IItemListingResponse } from '../../../models/item-listing-response.dto';
 import { ItemComponent } from '../../../components/item/item.component';
+import { IUserResponse } from '../../../models/user-response.dto';
 
 @Component({
   selector: 'app-buy',
@@ -19,6 +20,7 @@ export class BuyPage implements OnInit {
   userName?: string;
   credits: number = this.userService.credits;
   items?: IItemListingResponse[];
+  user?: IUserResponse;
 
   constructor(
     private jwtDecoder: JwtDecoderService,
@@ -34,7 +36,18 @@ export class BuyPage implements OnInit {
       this.router.navigate(['login']);
       return;
     }
-    this.credits = this.userService.credits;
+
+    this.userService.getUser().subscribe({
+      next: (user: IUserResponse) => {
+        this.userName = user.name;
+        this.credits = user.credits;
+        this.userService.credits = user.credits;
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+
     this.loadItems();
   }
 
