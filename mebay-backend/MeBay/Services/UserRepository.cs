@@ -119,7 +119,7 @@ namespace MeBay.Services
             userById.Email = user.Email;
             userById.Password = passwordHash;
 
-            if (tokenData.Role == "Admin")
+            if (tokenData.Role != "Admin")
             {
                 userById.Role = user.Role;
             }
