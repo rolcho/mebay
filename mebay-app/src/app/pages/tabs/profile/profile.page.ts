@@ -75,7 +75,7 @@ export class UserProfilePage {
   }
 
   ionViewWillEnter() {
-    this.userId = parseInt(this.userService.userId);
+    this.userId = this.userService.userId;
     this.userService.profile(this.userId).subscribe({
       next: (response: IUserRegisterResponse) => {
         this.userProfileFormGroup.get('name')?.setValue(response.name);
@@ -121,7 +121,7 @@ export class UserProfilePage {
         this.userProfileFormGroup.controls['existingPassword'].value;
       this.userService.login(this.user).subscribe({
         next: () => {
-          this.userService.delete(parseInt(this.userService.userId)).subscribe({
+          this.userService.delete(this.userService.userId).subscribe({
             next: () => {
               this.userService.logout();
               this.router.navigate(['/']);
@@ -165,7 +165,7 @@ export class UserProfilePage {
             this.user.name = this.userProfileFormGroup.controls['name'].value;
             this.user.email = this.userProfileFormGroup.controls['email'].value;
             this.userService
-              .update(this.user, parseInt(this.userService.userId))
+              .update(this.user, this.userService.userId)
               .subscribe({
                 next: (response: IUserRegisterResponse) => {
                   this.toast.presentToast('Your profile has been updated.');

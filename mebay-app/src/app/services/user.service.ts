@@ -68,8 +68,8 @@ export class UserService {
     return this.storage.get('name')!;
   }
 
-  get userId(): string {
-    return this.storage.get('userId')!;
+  get userId(): number {
+    return parseInt(this.storage.get('userId')!);
   }
 
   get isAuthenticated(): boolean {
