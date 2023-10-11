@@ -16,6 +16,7 @@ import { ITopUp } from '../../../models/user-topup.dto';
 import { ItemService } from '../../../services/item.service';
 import { IItemListingResponse } from '../../../models/item-listing-response.dto';
 import { IUserResponse } from '../../../models/user-response.dto';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -25,14 +26,12 @@ import { IUserResponse } from '../../../models/user-response.dto';
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class HomePage {
-  userName?: string;
-  credits?: number;
   topUp: boolean = false;
-  amountForm: FormGroup;
-  amount?: number;
-  soldItems?: IItemListingResponse[];
-  boughtItems?: IItemListingResponse[];
-  user?: IUserResponse;
+  creditForm: FormGroup;
+  topUpUserCredits?: ITopUp;
+  getUser$?: Observable<IUserResponse>;
+  getSoldItems$?: Observable<IItemListingResponse[]>;
+  getBoughtItems$?: Observable<IItemListingResponse[]>;
 
   constructor(
     private jwtDecoder: JwtDecoderService,
@@ -41,7 +40,7 @@ export class HomePage {
     private itemService: ItemService,
     private formBuilder: FormBuilder
   ) {
-    this.amountForm = this.formBuilder.group({
+    this.creditForm = this.formBuilder.group({
       amount: [, [Validators.required, Validators.min(1)]],
     });
   }
@@ -52,47 +51,28 @@ export class HomePage {
       return;
     }
 
-    this.userService.getUser().subscribe({
-      next: (user: IUserResponse) => {
-        this.userName = user.name;
-        this.credits = user.credits;
-      },
-      error: (response) => {
-        console.log(response);
-      },
-    });
-
-    this.itemService.getBoughtItems().subscribe({
-      next: (items: IItemListingResponse[]) => {
-        this.boughtItems = items;
-      },
-      error: (response) => {
-        console.log(response);
-      },
-    });
-    this.itemService.getSoldItems().subscribe({
-      next: (items: IItemListingResponse[]) => {
-        this.soldItems = items;
-      },
-      error: (response) => {
-        console.log(response);
-      },
-    });
+    this.getUser$ = this.userService.getUser();
+    this.getBoughtItems$ = this.itemService.getBoughtItems();
+    this.getSoldItems$ = this.itemService.getSoldItems();
   }
 
   topUpCredit() {
-    if (this.amountForm.valid) {
-      this.amount = this.amountForm.get('amount')!.value;
+    if (this.creditForm.valid) {
+      this.topUpUserCredits = {
+        credits: parseInt(this.creditForm.get('amount')!.value),
+        id: this.userService.userId,
+      };
       this.userService
-        .topUp({ credits: this.amount!, id: parseInt(this.userService.userId) })
+        .topUp(this.topUpUserCredits!)
+        .pipe(
+          tap(() => {
+            this.getUser$ = this.userService.getUser();
+          })
+        )
         .subscribe({
-          next: (response: ITopUp) => {
+          next: () => {
             this.topUp = !this.topUp;
-            this.credits = response.credits;
-            this.userService.credits = response.credits;
-          },
-          error: (err: HttpErrorResponse) => {
-            console.log(err.status);
+            this.creditForm.reset();
           },
         });
     }

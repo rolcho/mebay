@@ -1,13 +1,13 @@
 <ion-content [fullscreen]="true" color="primary">
   <div class="top-center">
     <ion-card>
-      <ion-card-header>
-        <ion-card-title>{{userName}} </ion-card-title>
-        <ion-card-subtitle>Credits: ${{credits}}</ion-card-subtitle>
+      <ion-card-header *ngIf="getUser$ | async as userInfo">
+        <ion-card-title>{{ userInfo.name }} </ion-card-title>
+        <ion-card-subtitle>Credits: ${{ userInfo.credits }}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <div *ngIf="topUp">
-          <form [formGroup]="amountForm">
+          <form [formGroup]="creditForm">
             <ion-input
               type="tel"
               label="Amount: "
@@ -27,7 +27,7 @@
         >
       </ion-card-content>
     </ion-card>
-    <ion-card *ngIf="boughtItems?.length">
+    <ion-card *ngIf="getBoughtItems$ | async as boughtItems">
       <ion-card-content>
         <ion-card-title>Bought items</ion-card-title>
         <div *ngFor="let item of boughtItems">
@@ -38,7 +38,7 @@
         </div>
       </ion-card-content>
     </ion-card>
-    <ion-card *ngIf="soldItems?.length">
+    <ion-card *ngIf="getSoldItems$ | async as soldItems">
       <ion-card-content>
         <ion-card-title>Sold items</ion-card-title>
         <div *ngFor="let item of soldItems">
