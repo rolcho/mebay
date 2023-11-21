@@ -126,6 +126,10 @@ namespace MeBay.Services
                     }
                 }
             }
+            else
+            {
+                item.Picture = "https://www.freeiconspng.com/uploads/no-image-icon-11.PNG";
+            }
 
             var newItem = _mapper.Map<Item>(item);
             newItem.SellerId = userId;

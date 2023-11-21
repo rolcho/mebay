@@ -39,7 +39,6 @@ export class ItemService {
   }
 
   addItem(item: IItemAddRequest): Observable<HttpResponse> {
-    console.log(item);
     return this.http.post<HttpResponse>(`${this.BASE_URL}`, item);
   }
 }
