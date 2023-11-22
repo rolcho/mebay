@@ -107,7 +107,6 @@ export class UserProfilePage {
     this.userService.listUsers().subscribe({
       next: (response: IUserResponse[]) => {
         this.userList = response;
-        console.log(response);
       },
       error: (response) => {
         console.log(response);
@@ -140,6 +139,18 @@ export class UserProfilePage {
     } else {
       this.toast.presentToast('You must enter your password!');
     }
+  }
+
+  deleteUser(user: IUserResponse) {
+    this.userService.delete(user.id).subscribe({
+      next: () => {
+        this.toast.presentToast(`${user.name} deleted`);
+        this.listUsers();
+      },
+      error: () => {
+        this.toast.presentToast('Something went wrong');
+      },
+    });
   }
 
   submitForm() {

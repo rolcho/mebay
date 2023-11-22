@@ -52,12 +52,21 @@
           (click)="listUsers()"
           >Show users</ion-button
         >
-        <div *ngFor="let user of userList">
+        <div *ngFor="let listedUser of userList">
           <ion-card-title style="padding-top: 16px"
-            >{{user.name}}</ion-card-title
+            >{{listedUser.name}}</ion-card-title
           >
-          <ion-card-subtitle>#{{user.id}} - {{user.email}}</ion-card-subtitle>
-          <ion-card-subtitle>$ {{user.credits}}</ion-card-subtitle>
+          <ion-card-subtitle
+            >#{{listedUser.id}} - {{listedUser.email}}</ion-card-subtitle
+          >
+          <ion-card-subtitle>$ {{listedUser.credits}}</ion-card-subtitle>
+          <ion-button
+            id="btn-list"
+            color="danger"
+            size="block"
+            (click)="deleteUser(listedUser)"
+            >Delete user</ion-button
+          >
         </div>
       </ion-card-content>
     </ion-card>
